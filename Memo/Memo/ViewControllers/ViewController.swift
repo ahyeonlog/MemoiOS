@@ -13,6 +13,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        showFirstInfoVC()
+        
+    }
+
+    func showFirstInfoVC() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         if appDelegate.firstLaunch?.isFirstLaunch == true {
             print("first launch")
@@ -21,10 +26,6 @@ class ViewController: UIViewController {
         } else {
             print("not first")
         }
-        
-        
     }
-
-
 }
 
