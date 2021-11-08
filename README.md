@@ -2,7 +2,7 @@
 
 
 <details>
-<summary><h3>1. 최초 팝업 화면</h3></summary>
+<summary>1. 최초 팝업 화면</summary>
 `FirstLaunchHelper.swift`
 
 ```swift
@@ -84,3 +84,6 @@ func showFirstInfoVC() {
 ```
 
 </details>
+
+
+
