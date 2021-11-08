@@ -10,10 +10,23 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var firstLaunch: FirstLaunch?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let source = UserDefaultsFirstLaunchDataSource(defaults: .standard, key: "com.arie.Memo")
+//        let source = AlwaysFirstLaunchDataSource()
+        self.firstLaunch = FirstLaunch(source: source)
+        
+//        #if DEBUG
+//            let source = AlwaysFirstLaunchDataSource()
+//            self.firstLaunch = FirstLaunch.alwaysFirst()
+//        #else
+//            let source = UserDefaultsFirstLaunchDataSource(defaults: .standard, key: "com.arie.Memo")
+//            self.firstLaunch = FirstLaunch(source: source)
+//        #endif
+
         return true
     }
 
