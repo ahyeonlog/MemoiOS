@@ -16,7 +16,11 @@ class MemoListViewController: UIViewController {
     }
     let realm = try! Realm()
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.estimatedRowHeight = UITableView.automaticDimension
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +31,11 @@ class MemoListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         data = realm.objects(Memo.self)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
     }
     
     private func setNavigationItem() {
@@ -46,6 +55,11 @@ class MemoListViewController: UIViewController {
         } else {
             print("not first")
         }
+    }
+    
+    @IBAction func createMemoButtonClicked(_ sender: UIBarButtonItem) {
+        let vc = CreateUpdateMemoViewController.instantiate()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -67,11 +81,26 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MemoListTableViewCell.identifier, for: indexPath)
-        
-        cell.textLabel?.text = data[indexPath.row].title
-        cell.detailTextLabel?.text = "2021.03.01"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MemoListTableViewCell.identifier, for: indexPath) as? MemoListTableViewCell else {
+            return UITableViewCell()
+        }
+        let row = data[indexPath.row]
+        cell.titleLabel.text = row.title
+        cell.dateLabel.text = "\(row.createdAt)"
+        cell.contentLabel.text = row.content
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            let vc = CreateUpdateMemoViewController.instantiate()
+            vc.memo = data[indexPath.row]
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }

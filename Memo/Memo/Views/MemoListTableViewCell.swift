@@ -10,6 +10,10 @@ import UIKit
 class MemoListTableViewCell: UITableViewCell {
     static let identifier: String = "MemoListTableViewCell"
     
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var contentLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

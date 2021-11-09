@@ -48,7 +48,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qIY-Dd-vyw"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="3OJ-Vh-ZO6" firstAttribute="height" secondItem="zbp-xr-rJi" secondAttribute="height" multiplier="0.3" id="Vzr-A0-cbc"/>
                             <constraint firstItem="qIY-Dd-vyw" firstAttribute="trailing" secondItem="3OJ-Vh-ZO6" secondAttribute="trailing" constant="20" id="XQY-ec-OFd"/>

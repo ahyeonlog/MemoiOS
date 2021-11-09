@@ -86,4 +86,11 @@ func showFirstInfoVC() {
 </details>
 
 
+<details>
+<summary>2. 수정화면</summary>
+```
+Content Layout Guide: ScrollView가 보여질 영역
+Frame Layout Guide: 스크롤뷰의 Frame에 해당하는 영역, 즉 스마트폰 화면에서 ScrollView가 보여질 영역
+```
 
+</details>

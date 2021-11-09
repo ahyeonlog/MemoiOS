@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -12,20 +12,73 @@
         <!--Create Update Memo View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="CreateUpdateMemoViewController" customModule="Memo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateUpdateMemoViewController" id="Y6W-OH-hqX" customClass="CreateUpdateMemoViewController" customModule="Memo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j8n-o5-inZ">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6EU-7c-mTX">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="33"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="33" id="bQP-VI-JuP"/>
+                                        </constraints>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="i3R-bL-HKw">
+                                        <rect key="frame" x="0.0" y="33" width="414" height="33"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="33" id="R8m-Kb-yiw"/>
+                                        </constraints>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="6EU-7c-mTX" firstAttribute="top" secondItem="qt8-pE-GOP" secondAttribute="top" id="05E-Qw-mLU"/>
+                                    <constraint firstItem="i3R-bL-HKw" firstAttribute="leading" secondItem="qt8-pE-GOP" secondAttribute="leading" id="5WR-R4-ywq"/>
+                                    <constraint firstItem="6EU-7c-mTX" firstAttribute="leading" secondItem="qt8-pE-GOP" secondAttribute="leading" id="Kh2-fR-NUT"/>
+                                    <constraint firstItem="i3R-bL-HKw" firstAttribute="width" secondItem="5ha-cU-LiM" secondAttribute="width" id="QMv-iW-O3l"/>
+                                    <constraint firstItem="6EU-7c-mTX" firstAttribute="width" secondItem="5ha-cU-LiM" secondAttribute="width" id="UGX-vc-4gg"/>
+                                    <constraint firstItem="i3R-bL-HKw" firstAttribute="top" secondItem="6EU-7c-mTX" secondAttribute="bottom" id="cpA-GR-GhT"/>
+                                    <constraint firstItem="i3R-bL-HKw" firstAttribute="bottom" secondItem="qt8-pE-GOP" secondAttribute="bottom" id="lBC-bd-HVB"/>
+                                    <constraint firstItem="qt8-pE-GOP" firstAttribute="trailing" secondItem="6EU-7c-mTX" secondAttribute="trailing" id="u4Y-g0-Qce"/>
+                                    <constraint firstItem="i3R-bL-HKw" firstAttribute="trailing" secondItem="qt8-pE-GOP" secondAttribute="trailing" id="vm0-D1-5VT"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="qt8-pE-GOP"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="5ha-cU-LiM"/>
+                            </scrollView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="j8n-o5-inZ" secondAttribute="bottom" id="0D8-AU-30c"/>
+                            <constraint firstItem="j8n-o5-inZ" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="1C6-CJ-KmD"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="j8n-o5-inZ" secondAttribute="trailing" id="mnS-zw-6ar"/>
+                            <constraint firstItem="j8n-o5-inZ" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="xeS-sU-uPV"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="contentTextView" destination="i3R-bL-HKw" id="gN2-7t-AzE"/>
+                        <outlet property="titleTextView" destination="6EU-7c-mTX" id="T1E-ag-8E3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-23" y="82"/>
+            <point key="canvasLocation" x="-23.188405797101453" y="81.696428571428569"/>
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

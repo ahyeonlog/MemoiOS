@@ -15,9 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-//        let source = UserDefaultsFirstLaunchDataSource(defaults: .standard, key: "com.arie.Memo")
-//        self.firstLaunch = FirstLaunch(source: source)
-        self.firstLaunch = FirstLaunch.alwaysFirst()
+        let source = UserDefaultsFirstLaunchDataSource(defaults: .standard, key: "com.arie.Memo")
+        self.firstLaunch = FirstLaunch(source: source)
+//        self.firstLaunch = FirstLaunch.alwaysFirst()
 //        #if DEBUG
 //            self.firstLaunch = FirstLaunch.alwaysFirst()
 //        #else
