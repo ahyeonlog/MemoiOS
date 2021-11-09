@@ -20,25 +20,35 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3OJ-Vh-ZO6">
                                 <rect key="frame" x="20" y="313.5" width="374" height="269"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gTl-Js-2h2">
-                                        <rect key="frame" x="143" y="208" width="49" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gTl-Js-2h2">
+                                        <rect key="frame" x="20" y="218" width="334" height="31"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="확인"/>
+                                        <connections>
+                                            <action selector="okButtonClicked:" destination="je9-XY-t1w" eventType="touchUpInside" id="OYz-iG-6g6"/>
+                                        </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="처음 오셨군요!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jU4-ew-em1">
-                                        <rect key="frame" x="50" y="55" width="98" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="처음 오셨군요!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jU4-ew-em1">
+                                        <rect key="frame" x="20" y="20" width="334" height="178"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBrownColor"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                <constraints>
+                                    <constraint firstItem="jU4-ew-em1" firstAttribute="top" secondItem="3OJ-Vh-ZO6" secondAttribute="top" constant="20" id="4ul-co-elD"/>
+                                    <constraint firstItem="gTl-Js-2h2" firstAttribute="leading" secondItem="3OJ-Vh-ZO6" secondAttribute="leading" constant="20" id="G6O-eC-Fmk"/>
+                                    <constraint firstItem="jU4-ew-em1" firstAttribute="leading" secondItem="3OJ-Vh-ZO6" secondAttribute="leading" constant="20" id="SLO-fd-igD"/>
+                                    <constraint firstAttribute="trailing" secondItem="gTl-Js-2h2" secondAttribute="trailing" constant="20" id="gWh-Of-XSW"/>
+                                    <constraint firstItem="gTl-Js-2h2" firstAttribute="top" secondItem="jU4-ew-em1" secondAttribute="bottom" constant="20" id="hxK-MR-UrZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="gTl-Js-2h2" secondAttribute="bottom" constant="20" id="npc-H1-Gjp"/>
+                                    <constraint firstAttribute="trailing" secondItem="jU4-ew-em1" secondAttribute="trailing" constant="20" id="xoZ-yK-jj3"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qIY-Dd-vyw"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="3OJ-Vh-ZO6" firstAttribute="height" secondItem="zbp-xr-rJi" secondAttribute="height" multiplier="0.3" id="Vzr-A0-cbc"/>
                             <constraint firstItem="qIY-Dd-vyw" firstAttribute="trailing" secondItem="3OJ-Vh-ZO6" secondAttribute="trailing" constant="20" id="XQY-ec-OFd"/>
@@ -47,6 +57,11 @@
                             <constraint firstItem="3OJ-Vh-ZO6" firstAttribute="centerX" secondItem="zbp-xr-rJi" secondAttribute="centerX" id="wgB-4h-cqL"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="infoLabel" destination="jU4-ew-em1" id="LIT-NT-JYt"/>
+                        <outlet property="infoView" destination="3OJ-Vh-ZO6" id="r8e-xj-lYg"/>
+                        <outlet property="okButton" destination="gTl-Js-2h2" id="DBo-8F-4q4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v1B-c8-Nsk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -54,11 +69,8 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBrownColor">
-            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
