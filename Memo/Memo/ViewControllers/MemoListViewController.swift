@@ -33,10 +33,10 @@ class MemoListViewController: UIViewController {
         return isActive
     }
     
-//    var isSearchBarEmpty: Bool {
-//        let searchController = self.navigationItem.searchController
-//        return !searchController?.searchBar.text?.isEmpty
-//    }
+    //    var isSearchBarEmpty: Bool {
+    //        let searchController = self.navigationItem.searchController
+    //        return !searchController?.searchBar.text?.isEmpty
+    //    }
     
     var searchText: String = "" {
         didSet {
@@ -52,7 +52,7 @@ class MemoListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        print(NSHomeDirectory())
+        //        print(NSHomeDirectory())
         showFirstInfoVC()
         setNavigationItem()
         tableView.delegate = self
@@ -142,7 +142,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let row: Memo = getRow(indexPath: indexPath)
-
+        
         let vc = CreateUpdateMemoViewController.instantiate()
         vc.memo = row
         self.navigationController?.pushViewController(vc, animated: true)
@@ -161,16 +161,16 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         image = row.isFavorite ? UIImage(systemName: "pin.slash.fill")! : UIImage(systemName: "pin.fill")!
         
         let favoriteAction = UIContextualAction(style: .normal, title: "고정", handler: { action, view, completionHaldler in
-                if self.favoriteList.count >= 5 {
-                    self.showAlert(alertTitle: "최대 5개까지 메모를 고정할 수 있습니다.")
-                    return
-                }
-                try! self.realm.write {
-                    row.isFavorite = !row.isFavorite
-                    self.tableView.reloadData()
-                }
-                completionHaldler(true)
-            })
+            if self.favoriteList.count >= 5 && row.isFavorite == false {
+                self.showAlert(alertTitle: "최대 5개까지 메모를 고정할 수 있습니다.")
+                return
+            }
+            try! self.realm.write {
+                row.isFavorite = !row.isFavorite
+                self.tableView.reloadData()
+            }
+            completionHaldler(true)
+        })
         favoriteAction.backgroundColor = .systemGreen
         favoriteAction.image = image
         return UISwipeActionsConfiguration(actions: [favoriteAction])
@@ -181,16 +181,16 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         let row: Memo = getRow(indexPath: indexPath)
         
         let deleteAction = UIContextualAction(style: .normal, title: "삭제", handler: { action, view, completionHaldler in
-                self.showAlert(alertTitle: "메모를 삭제하시겠습니까?", alertMessage: "정말요?") { action in
-                    try! self.realm.write {
-                        self.realm.delete(row)
-                        self.tableView.reloadData()
-                    }
-                } cancelHandler: { action in
-                    return
+            self.showAlert(alertTitle: "메모를 삭제하시겠습니까?", alertMessage: "정말요?") { action in
+                try! self.realm.write {
+                    self.realm.delete(row)
+                    self.tableView.reloadData()
                 }
-                completionHaldler(true)
-            })
+            } cancelHandler: { action in
+                return
+            }
+            completionHaldler(true)
+        })
         deleteAction.backgroundColor = .systemRed
         deleteAction.image = UIImage(systemName: "trash.fill")
         return UISwipeActionsConfiguration(actions: [deleteAction])
