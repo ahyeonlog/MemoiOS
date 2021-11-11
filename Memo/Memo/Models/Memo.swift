@@ -12,6 +12,7 @@ class Memo: Object {
     @Persisted var title: String
     @Persisted var content: String
     @Persisted var createdAt: Date
+    @Persisted var isFavorite: Bool
     @Persisted(primaryKey: true) var _id: ObjectId
     
     convenience init(title: String, content: String) {
@@ -19,5 +20,6 @@ class Memo: Object {
         self.title = title
         self.content = content
         self.createdAt = Date()
+        self.isFavorite = false
     }
 }

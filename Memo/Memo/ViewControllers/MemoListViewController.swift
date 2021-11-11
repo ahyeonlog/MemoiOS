@@ -9,9 +9,9 @@ import UIKit
 import RealmSwift
 
 class MemoListViewController: UIViewController {
-    var data: Results<Memo>! {
+    var memoList: Results<Memo>! {
         didSet {
-            self.navigationItem.title = "\(data.count)개의 메모"
+            self.navigationItem.title = "\(memoList.count)개의 메모"
         }
     }
     let realm = try! Realm()
@@ -30,7 +30,7 @@ class MemoListViewController: UIViewController {
         setNavigationItem()
         tableView.delegate = self
         tableView.dataSource = self
-        data = realm.objects(Memo.self)
+        memoList = realm.objects(Memo.self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -77,14 +77,25 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        if section == 0 {
+            return memoList.filter("isFavorite == true").count
+        } else {
+            return memoList.filter("isFavorite == false").count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MemoListTableViewCell.identifier, for: indexPath) as? MemoListTableViewCell else {
             return UITableViewCell()
         }
-        let row = data[indexPath.row]
+        
+        let row: Memo
+        if indexPath.section == 0 {
+            row = memoList.filter("isFavorite == true")[indexPath.row]
+        } else {
+            row = memoList.filter("isFavorite == false")[indexPath.row]
+        }
+        
         cell.titleLabel.text = row.title
         cell.dateLabel.text = "\(row.createdAt)"
         cell.contentLabel.text = row.content
@@ -95,12 +106,55 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             let vc = CreateUpdateMemoViewController.instantiate()
-            vc.memo = data[indexPath.row]
+            vc.memo = memoList[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    // favorite
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let row: Memo
+        let image: UIImage
+        
+        if indexPath.section == 0 {
+            row = memoList.filter("isFavorite == true")[indexPath.row]
+            image = UIImage(systemName: "pin.slash.fill")!
+        } else {
+            row = memoList.filter("isFavorite == false")[indexPath.row]
+            image = UIImage(systemName: "pin.fill")!
+        }
+        
+        let favoriteAction = UIContextualAction(style: .normal, title: "1", handler: { action, view, completionHaldler in
+                try! self.realm.write {
+                    row.isFavorite = !row.isFavorite
+                    self.tableView.reloadData()
+                }
+                completionHaldler(true)
+            })
+        favoriteAction.backgroundColor = .systemGreen
+        favoriteAction.image = image
+         //pin.slash.fill
+        return UISwipeActionsConfiguration(actions: [favoriteAction])
+    }
+    
+    // delete
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .normal, title: "1", handler: { action, view, completionHaldler in
+                print("action performed")
+                let row = self.memoList[indexPath.row]
+                try! self.realm.write {
+                    self.realm.delete(row)
+                    self.tableView.reloadData()
+                    // Todo: showAlert
+                }
+                completionHaldler(true)
+            })
+        deleteAction.backgroundColor = .systemRed
+        deleteAction.image = UIImage(systemName: "trash.fill")
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }

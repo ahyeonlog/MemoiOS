@@ -7,6 +7,12 @@
 
 import UIKit
 
+extension UIViewController {
+    func showAlert() {
+        
+    }
+}
+
 protocol StoryboardInitializable {
     static var storyboardName: String { get set }
     static var storyboardID: String { get set }
