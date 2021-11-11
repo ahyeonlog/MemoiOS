@@ -14,17 +14,45 @@ class MemoListViewController: UIViewController {
             self.navigationItem.title = "\(memoList.count)개의 메모"
         }
     }
+    var favoriteList: Results<Memo>! {
+        memoList.filter("isFavorite == true")
+    }
+    var notFavoriteList: Results<Memo>! {
+        memoList.filter("isFavorite == false")
+    }
+    var filterMemoList: Results<Memo>! {
+        memoList.filter("title CONTAINS[c] '\(searchText)' OR content CONTAINS[c] '\(searchText)'")
+    }
+    
     let realm = try! Realm()
+    
+    var isFiltering: Bool {
+        let searchController = self.navigationItem.searchController
+        let isActive = searchController?.isActive ?? false
+        
+        return isActive
+    }
+    
+//    var isSearchBarEmpty: Bool {
+//        let searchController = self.navigationItem.searchController
+//        return !searchController?.searchBar.text?.isEmpty
+//    }
+    
+    var searchText: String = "" {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.estimatedRowHeight = UITableView.automaticDimension
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(NSHomeDirectory())
+//        print(NSHomeDirectory())
         showFirstInfoVC()
         setNavigationItem()
         tableView.delegate = self
@@ -39,11 +67,12 @@ class MemoListViewController: UIViewController {
     
     private func setNavigationItem() {
         let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "검색"
         self.navigationItem.searchController = searchController
         self.navigationController?.navigationBar.prefersLargeTitles = true
     }
-
+    
     private func showFirstInfoVC() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         if appDelegate.firstLaunch?.isFirstLaunch == true {
@@ -63,11 +92,24 @@ class MemoListViewController: UIViewController {
 }
 
 extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
+    func getRow(indexPath: IndexPath) -> Memo {
+        if isFiltering {
+            return filterMemoList[indexPath.row]
+        }
+        else if indexPath.section == 0 {
+            return favoriteList[indexPath.row]
+        } else {
+            return notFavoriteList[indexPath.row]
+        }
+    }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return self.isFiltering ? 1 : 2
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if self.isFiltering {
+            return "\(filterMemoList.count)개의 메모"
+        }
         if section == 0 {
             return "고정된 메모"
         } else {
@@ -76,10 +118,13 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering {
+            return filterMemoList.count
+        }
         if section == 0 {
-            return memoList.filter("isFavorite == true").count
+            return favoriteList.count
         } else {
-            return memoList.filter("isFavorite == false").count
+            return notFavoriteList.count
         }
     }
     
@@ -87,18 +132,11 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MemoListTableViewCell.identifier, for: indexPath) as? MemoListTableViewCell else {
             return UITableViewCell()
         }
-        
-        let row: Memo
-        if indexPath.section == 0 {
-            row = memoList.filter("isFavorite == true")[indexPath.row]
-        } else {
-            row = memoList.filter("isFavorite == false")[indexPath.row]
+        let row: Memo = getRow(indexPath: indexPath)
+        cell.configureCell(row: row)
+        if isFiltering {
+            cell.setHighlightedLabel(searchText: searchText)
         }
-        
-        cell.titleLabel.text = row.title
-        cell.dateLabel.text = "\(row.createdAt)"
-        cell.contentLabel.text = row.content
-        
         return cell
     }
     
@@ -116,16 +154,10 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     // favorite
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let row: Memo
-        let image: UIImage
+        let row: Memo = getRow(indexPath: indexPath)
+        var image: UIImage
         
-        if indexPath.section == 0 {
-            row = memoList.filter("isFavorite == true")[indexPath.row]
-            image = UIImage(systemName: "pin.slash.fill")!
-        } else {
-            row = memoList.filter("isFavorite == false")[indexPath.row]
-            image = UIImage(systemName: "pin.fill")!
-        }
+        image = row.isFavorite ? UIImage(systemName: "pin.slash.fill")! : UIImage(systemName: "pin.fill")!
         
         let favoriteAction = UIContextualAction(style: .normal, title: "고정", handler: { action, view, completionHaldler in
                 try! self.realm.write {
@@ -136,19 +168,12 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
             })
         favoriteAction.backgroundColor = .systemGreen
         favoriteAction.image = image
-         //pin.slash.fill
         return UISwipeActionsConfiguration(actions: [favoriteAction])
     }
     
     // delete
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let row: Memo
-        
-        if indexPath.section == 0 {
-            row = memoList.filter("isFavorite == true")[indexPath.row]
-        } else {
-            row = memoList.filter("isFavorite == false")[indexPath.row]
-        }
+        let row: Memo = getRow(indexPath: indexPath)
         
         let deleteAction = UIContextualAction(style: .normal, title: "삭제", handler: { action, view, completionHaldler in
                 self.showAlert(alertTitle: "메모를 삭제하시겠습니까?", alertMessage: "정말요?") { action in
@@ -164,5 +189,12 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         deleteAction.backgroundColor = .systemRed
         deleteAction.image = UIImage(systemName: "trash.fill")
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+}
+
+extension MemoListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text?.lowercased() else { return }
+        self.searchText = text
     }
 }
