@@ -27,6 +27,13 @@ extension UIViewController {
         // 4. present
         present(alert, animated: true, completion: nil)
     }
+    
+    func showAlert(alertTitle: String) {
+        let alert = UIAlertController(title: alertTitle, message: "", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 protocol StoryboardInitializable {

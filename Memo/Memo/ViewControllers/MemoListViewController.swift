@@ -96,21 +96,21 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         if isFiltering {
             return filterMemoList[indexPath.row]
         }
-        else if indexPath.section == 0 {
+        else if favoriteList.count != 0 && indexPath.section == 0 {
             return favoriteList[indexPath.row]
         } else {
             return notFavoriteList[indexPath.row]
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.isFiltering ? 1 : 2
+        return isFiltering || favoriteList.count == 0 ? 1 : 2
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if self.isFiltering {
             return "\(filterMemoList.count)개의 메모"
         }
-        if section == 0 {
+        if favoriteList.count != 0 && section == 0 {
             return "고정된 메모"
         } else {
             return "메모"
@@ -121,7 +121,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         if isFiltering {
             return filterMemoList.count
         }
-        if section == 0 {
+        if favoriteList.count != 0 && section == 0 {
             return favoriteList.count
         } else {
             return notFavoriteList.count
@@ -141,11 +141,12 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
-            let vc = CreateUpdateMemoViewController.instantiate()
-            vc.memo = memoList[indexPath.row]
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        let row: Memo = getRow(indexPath: indexPath)
+
+        let vc = CreateUpdateMemoViewController.instantiate()
+        vc.memo = row
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -160,6 +161,10 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         image = row.isFavorite ? UIImage(systemName: "pin.slash.fill")! : UIImage(systemName: "pin.fill")!
         
         let favoriteAction = UIContextualAction(style: .normal, title: "고정", handler: { action, view, completionHaldler in
+                if self.favoriteList.count >= 5 {
+                    self.showAlert(alertTitle: "최대 5개까지 메모를 고정할 수 있습니다.")
+                    return
+                }
                 try! self.realm.write {
                     row.isFavorite = !row.isFavorite
                     self.tableView.reloadData()
