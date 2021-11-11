@@ -8,8 +8,24 @@
 import UIKit
 
 extension UIViewController {
-    func showAlert() {
+    func showAlert(alertTitle: String, alertMessage: String, okHandler: @escaping (UIAlertAction)->(), cancelHandler: @escaping (UIAlertAction) -> ()) {
+        // 1. UIAlertController 생성: 밑바탕 + 타이틀 + 본문
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         
+        // 2. UIAlertAction 생성: 버튼들..
+        let ok = UIAlertAction(title: "삭제", style: .default) { action in
+            okHandler(action)
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { action in
+            cancelHandler(action)
+        }
+        
+        // 3. 1+2
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        
+        // 4. present
+        present(alert, animated: true, completion: nil)
     }
 }
 

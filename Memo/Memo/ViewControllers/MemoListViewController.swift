@@ -128,7 +128,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
             image = UIImage(systemName: "pin.fill")!
         }
         
-        let favoriteAction = UIContextualAction(style: .normal, title: "1", handler: { action, view, completionHaldler in
+        let favoriteAction = UIContextualAction(style: .normal, title: "고정", handler: { action, view, completionHaldler in
                 try! self.realm.write {
                     row.isFavorite = !row.isFavorite
                     self.tableView.reloadData()
@@ -143,13 +143,22 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     // delete
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .normal, title: "1", handler: { action, view, completionHaldler in
-                print("action performed")
-                let row = self.memoList[indexPath.row]
-                try! self.realm.write {
-                    self.realm.delete(row)
-                    self.tableView.reloadData()
-                    // Todo: showAlert
+        let row: Memo
+        
+        if indexPath.section == 0 {
+            row = memoList.filter("isFavorite == true")[indexPath.row]
+        } else {
+            row = memoList.filter("isFavorite == false")[indexPath.row]
+        }
+        
+        let deleteAction = UIContextualAction(style: .normal, title: "삭제", handler: { action, view, completionHaldler in
+                self.showAlert(alertTitle: "메모를 삭제하시겠습니까?", alertMessage: "정말요?") { action in
+                    try! self.realm.write {
+                        self.realm.delete(row)
+                        self.tableView.reloadData()
+                    }
+                } cancelHandler: { action in
+                    return
                 }
                 completionHaldler(true)
             })
