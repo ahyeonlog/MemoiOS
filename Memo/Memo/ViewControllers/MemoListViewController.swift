@@ -24,13 +24,12 @@ class MemoListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(self, #function)
         print(NSHomeDirectory())
         showFirstInfoVC()
         setNavigationItem()
         tableView.delegate = self
         tableView.dataSource = self
-        memoList = realm.objects(Memo.self)
+        memoList = realm.objects(Memo.self).sorted(byKeyPath: "createdAt", ascending: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
