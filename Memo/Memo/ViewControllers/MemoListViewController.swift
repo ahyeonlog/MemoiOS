@@ -7,11 +7,12 @@
 
 import UIKit
 import RealmSwift
+import Toast
 
 class MemoListViewController: UIViewController {
     var memoList: Results<Memo>! {
         didSet {
-            self.navigationItem.title = "\(memoList.count)개의 메모"
+            self.navigationItem.title = "\(NumberFormatter.decimal.string(from: NSNumber(value: memoList.count))!)개의 메모"
         }
     }
     var favoriteList: Results<Memo>! {
@@ -47,6 +48,7 @@ class MemoListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.estimatedRowHeight = UITableView.automaticDimension
+            tableView.keyboardDismissMode = .onDrag
         }
     }
     
@@ -70,6 +72,7 @@ class MemoListViewController: UIViewController {
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "검색"
         self.navigationItem.searchController = searchController
+        self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationController?.navigationBar.prefersLargeTitles = true
     }
     
@@ -108,7 +111,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if self.isFiltering {
-            return "\(filterMemoList.count)개의 메모"
+            return "\(NumberFormatter.decimal.string(from: NSNumber(value: filterMemoList.count))!)개의 메모"
         }
         if favoriteList.count != 0 && section == 0 {
             return "고정된 메모"
@@ -185,6 +188,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
                 try! self.realm.write {
                     self.realm.delete(row)
                     self.tableView.reloadData()
+                    self.view.makeToast("메모를 삭제했습니다.")
                 }
             } cancelHandler: { action in
                 return

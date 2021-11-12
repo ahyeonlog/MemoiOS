@@ -11,6 +11,10 @@
 		E5369A89273A3CB000F25C80 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5369A88273A3CB000F25C80 /* Memo.swift */; };
 		E5369A8B273A3E1200F25C80 /* CreateUpdateMemo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5369A8A273A3E1200F25C80 /* CreateUpdateMemo.storyboard */; };
 		E5369A8E273A3E3800F25C80 /* CreateUpdateMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5369A8D273A3E3800F25C80 /* CreateUpdateMemoViewController.swift */; };
+		E59A1398273D705300701FD6 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = E59A1397273D705300701FD6 /* Toast */; };
+		E59A139C273D785300701FD6 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A139B273D785300701FD6 /* UIFont+Extension.swift */; };
+		E59A139E273D787600701FD6 /* DateFormattter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A139D273D787600701FD6 /* DateFormattter+Extension.swift */; };
+		E59A13A0273D79B300701FD6 /* NumberFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59A139F273D79B300701FD6 /* NumberFormatter+Extension.swift */; };
 		E5A17C3B2738F88A00A4A15C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A17C3A2738F88A00A4A15C /* AppDelegate.swift */; };
 		E5A17C3D2738F88A00A4A15C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A17C3C2738F88A00A4A15C /* SceneDelegate.swift */; };
 		E5A17C3F2738F88A00A4A15C /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A17C3E2738F88A00A4A15C /* MemoListViewController.swift */; };
@@ -29,6 +33,9 @@
 		E5369A88273A3CB000F25C80 /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		E5369A8A273A3E1200F25C80 /* CreateUpdateMemo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateUpdateMemo.storyboard; sourceTree = "<group>"; };
 		E5369A8D273A3E3800F25C80 /* CreateUpdateMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUpdateMemoViewController.swift; sourceTree = "<group>"; };
+		E59A139B273D785300701FD6 /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		E59A139D273D787600701FD6 /* DateFormattter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormattter+Extension.swift"; sourceTree = "<group>"; };
+		E59A139F273D79B300701FD6 /* NumberFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Extension.swift"; sourceTree = "<group>"; };
 		E5A17C372738F88A00A4A15C /* Memo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5A17C3A2738F88A00A4A15C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5A17C3C2738F88A00A4A15C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E59A1398273D705300701FD6 /* Toast in Frameworks */,
 				E5A17C542739263500A4A15C /* RealmSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,6 +153,9 @@
 			isa = PBXGroup;
 			children = (
 				E5A17C5A2739CDDA00A4A15C /* UIViewController+Extension.swift */,
+				E59A139B273D785300701FD6 /* UIFont+Extension.swift */,
+				E59A139D273D787600701FD6 /* DateFormattter+Extension.swift */,
+				E59A139F273D79B300701FD6 /* NumberFormatter+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -167,6 +178,7 @@
 			name = Memo;
 			packageProductDependencies = (
 				E5A17C532739263500A4A15C /* RealmSwift */,
+				E59A1397273D705300701FD6 /* Toast */,
 			);
 			productName = Memo;
 			productReference = E5A17C372738F88A00A4A15C /* Memo.app */;
@@ -198,6 +210,7 @@
 			mainGroup = E5A17C2E2738F88A00A4A15C;
 			packageReferences = (
 				E5A17C522739263500A4A15C /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				E59A1396273D705300701FD6 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = E5A17C382738F88A00A4A15C /* Products */;
 			projectDirPath = "";
@@ -229,6 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5A17C5B2739CDDA00A4A15C /* UIViewController+Extension.swift in Sources */,
+				E59A13A0273D79B300701FD6 /* NumberFormatter+Extension.swift in Sources */,
 				E5A17C3F2738F88A00A4A15C /* MemoListViewController.swift in Sources */,
 				E5A17C56273928F600A4A15C /* FirstLaunchHelper.swift in Sources */,
 				E5369A8E273A3E3800F25C80 /* CreateUpdateMemoViewController.swift in Sources */,
@@ -236,7 +250,9 @@
 				E5369A86273A30DA00F25C80 /* MemoListTableViewCell.swift in Sources */,
 				E5A17C3B2738F88A00A4A15C /* AppDelegate.swift in Sources */,
 				E5A17C3D2738F88A00A4A15C /* SceneDelegate.swift in Sources */,
+				E59A139C273D785300701FD6 /* UIFont+Extension.swift in Sources */,
 				E5A17C582739CDA900A4A15C /* FirstInfoViewController.swift in Sources */,
+				E59A139E273D787600701FD6 /* DateFormattter+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,7 +329,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -368,7 +384,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -460,6 +476,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E59A1396273D705300701FD6 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		E5A17C522739263500A4A15C /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-cocoa.git";
@@ -471,6 +495,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E59A1397273D705300701FD6 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E59A1396273D705300701FD6 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
 		E5A17C532739263500A4A15C /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E5A17C522739263500A4A15C /* XCRemoteSwiftPackageReference "realm-cocoa" */;

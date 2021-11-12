@@ -15,22 +15,23 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
     let realm = try! Realm()
     var memo: Memo?
     
-    @IBOutlet weak var titleTextView: UITextView!
-    @IBOutlet weak var contentTextView: UITextView!
+    @IBOutlet weak var textView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         setNavigationBarButton()
         configureViewController()
+        if memo == nil {
+            textView.becomeFirstResponder()
+        }
     }
     
     func configureViewController() {
         guard let memo = memo else {
             return
         }
-        titleTextView.text = memo.title
-        contentTextView.text = memo.content
+        textView.text = memo.title + "\n" + memo.content
     }
     
     private func setNavigationBarButton() {
@@ -41,12 +42,18 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
 
     
     @objc func doneButtonClicked() {
-        guard let title = titleTextView.text, let content = contentTextView.text else {
+        guard let text = textView.text else {
             return
         }
-        if title.isEmpty || content.isEmpty {
+        if text.isEmpty {
+            self.navigationController?.popViewController(animated: true)
             return
         }
+        
+        var textViewString: String = text
+
+        let title = "title"
+        let content = "content"
         
         // 새로 저장
         guard let memo = memo else {
@@ -57,18 +64,17 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
             self.navigationController?.popViewController(animated: true)
             return
         }
-        
         // 수정
         try! realm.write {
             memo.title = title
             memo.content = title
         }
-        
         self.navigationController?.popViewController(animated: true)
     }
     
     @objc func shareButtonClicked() {
         print("공유")
+        
     }
     
     

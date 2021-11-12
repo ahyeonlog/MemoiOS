@@ -27,7 +27,8 @@ class MemoListTableViewCell: UITableViewCell {
     
     func configureCell(row: Memo) {
         titleLabel.text = row.title
-        dateLabel.text = "\(row.createdAt)"
+        let date = DateFormatter.getDateString(date: row.createdAt)
+        dateLabel.text = "\(date)"
         contentLabel.text = row.content
         titleLabel.textColor = .black
         contentLabel.textColor = .black
