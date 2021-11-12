@@ -10,9 +10,21 @@ import UIKit
 class MemoListTableViewCell: UITableViewCell {
     static let identifier: String = "MemoListTableViewCell"
     
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel! {
+        didSet {
+            titleLabel.font = UIFont().titleStyle
+        }
+    }
+    @IBOutlet weak var dateLabel: UILabel! {
+        didSet {
+            dateLabel.font = UIFont().subscriptStyle
+        }
+    }
+    @IBOutlet weak var contentLabel: UILabel! {
+        didSet {
+            contentLabel.font = UIFont().subscriptStyle
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,8 +42,8 @@ class MemoListTableViewCell: UITableViewCell {
         let date = DateFormatter.getDateString(date: row.createdAt)
         dateLabel.text = "\(date)"
         contentLabel.text = row.content
-        titleLabel.textColor = .black
-        contentLabel.textColor = .black
+        titleLabel.textColor = .white
+        contentLabel.textColor = .white
     }
     
     func setHighlightedLabel(searchText: String) {

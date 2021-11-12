@@ -14,16 +14,23 @@ class FirstInfoViewController: UIViewController, StoryboardInitializable {
     @IBOutlet weak var infoView: UIView! {
         didSet {
             infoView.layer.cornerRadius = 10
+            infoView.backgroundColor = .darkGray
         }
     }
     @IBOutlet weak var infoLabel: UILabel! {
         didSet {
             infoLabel.text = "처음 오셨군요!\n환영합니다:)\n\n당신만의 메모를 작성하고\n관리해보세요"
             infoLabel.numberOfLines = 0
+            infoLabel.font = UIFont().infoFont
         }
     }
     
-    @IBOutlet weak var okButton: UIButton!
+    @IBOutlet weak var okButton: UIButton! {
+        didSet {
+            okButton.layer.cornerRadius = 10
+            okButton.backgroundColor = .systemGreen
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

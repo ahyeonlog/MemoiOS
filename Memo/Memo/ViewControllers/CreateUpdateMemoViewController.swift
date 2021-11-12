@@ -15,16 +15,25 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
     let realm = try! Realm()
     var memo: Memo?
     
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var textView: UITextView! {
+        didSet {
+            textView.textContainerInset = UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .black
+        
         configureViewController()
         textView.delegate = self
         if memo == nil {
             textView.becomeFirstResponder()
         }
+        let buttonAppearance = UIBarButtonItemAppearance()
+        buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.systemGreen]
+        navigationItem.standardAppearance?.buttonAppearance = buttonAppearance
+        navigationItem.compactAppearance?.buttonAppearance = buttonAppearance
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -16,15 +16,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let source = UserDefaultsFirstLaunchDataSource(defaults: .standard, key: "com.arie.Memo")
-        self.firstLaunch = FirstLaunch(source: source)
-//        self.firstLaunch = FirstLaunch.alwaysFirst()
+//        self.firstLaunch = FirstLaunch(source: source)
+        self.firstLaunch = FirstLaunch.alwaysFirst()
 //        #if DEBUG
 //            self.firstLaunch = FirstLaunch.alwaysFirst()
 //        #else
 //            let source = UserDefaultsFirstLaunchDataSource(defaults: .standard, key: "com.arie.Memo")
 //            self.firstLaunch = FirstLaunch(source: source)
 //        #endif
-
+        
+        // appearance
+        UILabel.appearance().textColor = .white
+        UITableView.appearance().backgroundColor = .black
+        UITableViewCell.appearance().backgroundColor = .darkGray
+        UITextView.appearance().backgroundColor = .clear
+        UITextView.appearance().textColor = .white
+        UITextView.appearance().font = UIFont().textViewStyle
+        
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "취소"
+        UIBarButtonItem.appearance().tintColor = .systemGreen
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [.foregroundColor: UIColor.white]
+        
+        UIToolbarAppearance().configureWithTransparentBackground()
+        UIToolbarAppearance().backgroundColor = .clear
+        
         return true
     }
 

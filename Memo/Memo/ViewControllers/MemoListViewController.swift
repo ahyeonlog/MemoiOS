@@ -52,10 +52,13 @@ class MemoListViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var toolBar: UIToolbar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //        print(NSHomeDirectory())
         showFirstInfoVC()
+        setNavigationAppearance()
         setNavigationItem()
         tableView.delegate = self
         tableView.dataSource = self
@@ -66,7 +69,23 @@ class MemoListViewController: UIViewController {
         super.viewDidAppear(animated)
         tableView.reloadData()
     }
-    
+    private func setNavigationAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.black
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
+        
+//        toolBar.setBackgroundImage(UIImage(),
+//                                        forToolbarPosition: .any,
+//                                        barMetrics: .default)
+//        toolBar.setShadowImage(UIImage(), forToolbarPosition: .any)
+
+        
+    }
     private func setNavigationItem() {
         let searchController = UISearchController()
         searchController.searchResultsUpdater = self
@@ -160,6 +179,15 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        (view as! UITableViewHeaderFooterView).textLabel?.font = UIFont().sectionFont
+        (view as! UITableViewHeaderFooterView).textLabel?.textColor = UIColor.white
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
     }
     
     // favorite
