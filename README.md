@@ -1,14 +1,18 @@
 # Memo
 
-![화면-기록-2021-11-12-오후-5.31.40](README.assets/화면-기록-2021-11-12-오후-5.31.40.gif)
+|  iPhone 13 Pro MAX    | iPhone 8 |
+| ---- | ---- |
+|  ![화면-기록-2021-11-12-오후-5.31.40](README.assets/화면-기록-2021-11-12-오후-5.31.40.gif)    |      |
+
+
 
 
 
 
 <details>
 <summary>1. 최초 팝업 화면</summary>
-
 `FirstLaunchHelper.swift`
+
 ```swift
 import Foundation
 
