@@ -20,8 +20,8 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        setNavigationBarButton()
         configureViewController()
+        textView.delegate = self
         if memo == nil {
             textView.becomeFirstResponder()
         }
@@ -41,10 +41,16 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
         textView.text = memo.title + memo.content
     }
     
-    private func setNavigationBarButton() {        
+    private func setNavigationBarButton() {
+        var items = [UIBarButtonItem]()
         let rightDoneBarButtonItem = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(doneButtonClicked))
-        let rightShareBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareButtonClicked))
-        navigationItem.setRightBarButtonItems([rightDoneBarButtonItem, rightShareBarButtonItem], animated: false)
+        items.append(rightDoneBarButtonItem)
+        if memo != nil {
+            let rightShareBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareButtonClicked))
+            items.append(rightShareBarButtonItem)
+        }
+        
+        navigationItem.setRightBarButtonItems(items, animated: false)
     }
     
     private func saveMemo() {
@@ -85,19 +91,23 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
         }
     }
     
-    
     @objc func doneButtonClicked() {
 //        saveMemo()
         self.navigationController?.popViewController(animated: true)
     }
     
     @objc func shareButtonClicked() {
-        print("공유")
         guard let memo = memo else {
             return
         }
 
         let vc = UIActivityViewController(activityItems: ["\(memo.title)\(memo.content)"], applicationActivities: [])
         self.present(vc, animated: true, completion: nil)
+    }
+}
+
+extension CreateUpdateMemoViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        setNavigationBarButton()
     }
 }
