@@ -16,8 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let source = UserDefaultsFirstLaunchDataSource(defaults: .standard, key: "com.arie.Memo")
-//        self.firstLaunch = FirstLaunch(source: source)
-        self.firstLaunch = FirstLaunch.alwaysFirst()
+        self.firstLaunch = FirstLaunch(source: source)
+
 //        #if DEBUG
 //            self.firstLaunch = FirstLaunch.alwaysFirst()
 //        #else
