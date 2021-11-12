@@ -50,10 +50,15 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
             return
         }
         
-        var textViewString: String = text
-
-        let title = "title"
-        let content = "content"
+        var title = ""
+        var content = ""
+        
+        if let firstLineEndIndex = text.firstIndex(of: "\n") {
+            title = String(text[...firstLineEndIndex])
+            content = String(text[text.index(after: firstLineEndIndex)...])
+        } else {
+            title = text
+        }
         
         // 새로 저장
         guard let memo = memo else {
@@ -68,8 +73,10 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
         try! realm.write {
             memo.title = title
             memo.content = title
+            self.navigationController?.popViewController(animated: true)
+            return
         }
-        self.navigationController?.popViewController(animated: true)
+        
     }
     
     @objc func shareButtonClicked() {
