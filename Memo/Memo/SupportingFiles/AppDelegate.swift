@@ -15,20 +15,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let source = UserDefaultsFirstLaunchDataSource(defaults: .standard, key: "com.arie.Memo")
-        self.firstLaunch = FirstLaunch(source: source)
+//        let source = UserDefaultsFirstLaunchDataSource(defaults: .standard, key: "com.arie.Memo")
+//        self.firstLaunch = FirstLaunch(source: source)
 
-//        #if DEBUG
-//            self.firstLaunch = FirstLaunch.alwaysFirst()
-//        #else
-//            let source = UserDefaultsFirstLaunchDataSource(defaults: .standard, key: "com.arie.Memo")
-//            self.firstLaunch = FirstLaunch(source: source)
-//        #endif
+        #if DEBUG
+            self.firstLaunch = FirstLaunch.alwaysFirst()
+        #else
+            let source = UserDefaultsFirstLaunchDataSource(defaults: .standard, key: "com.arie.Memo")
+            self.firstLaunch = FirstLaunch(source: source)
+        #endif
         
         // appearance
         UILabel.appearance().textColor = .white
         UITableView.appearance().backgroundColor = .black
-        UITableViewCell.appearance().backgroundColor = .darkGray
+        UITableViewCell.appearance().backgroundColor = UIColor(red: 77/255, green: 77/255, blue: 77/255, alpha: 0.4)
         UITextView.appearance().backgroundColor = .clear
         UITextView.appearance().textColor = .white
         UITextView.appearance().font = UIFont().textViewStyle

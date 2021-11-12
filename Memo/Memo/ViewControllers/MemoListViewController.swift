@@ -56,7 +56,7 @@ class MemoListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        print(NSHomeDirectory())
+        print(NSHomeDirectory())
         showFirstInfoVC()
         setNavigationAppearance()
         setNavigationItem()

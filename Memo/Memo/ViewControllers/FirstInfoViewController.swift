@@ -14,7 +14,7 @@ class FirstInfoViewController: UIViewController, StoryboardInitializable {
     @IBOutlet weak var infoView: UIView! {
         didSet {
             infoView.layer.cornerRadius = 10
-            infoView.backgroundColor = .darkGray
+            infoView.backgroundColor = UIColor(red: 77/255, green: 77/255, blue: 77/255, alpha: 1)
         }
     }
     @IBOutlet weak var infoLabel: UILabel! {
