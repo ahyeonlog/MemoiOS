@@ -93,6 +93,11 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
     
     @objc func shareButtonClicked() {
         print("공유")
-        
+        guard let memo = memo else {
+            return
+        }
+
+        let vc = UIActivityViewController(activityItems: ["\(memo.title)\(memo.content)"], applicationActivities: [])
+        self.present(vc, animated: true, completion: nil)
     }
 }
