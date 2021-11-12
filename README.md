@@ -110,7 +110,7 @@ override func viewDidLoad() {
 
 2. `isMovingFromParent` `didMove`
 
-   좀 더 찾아보니 이런 프로퍼티와 함수가 있었다고 한다.
+   좀 더 찾아보니 이런 프로퍼티와 함수가 있었다고 한다. 그런데 이게 기획 의도에 맞는 구현인지 헷갈립니다..
 
 ```swift
     override func viewWillDisappear(_ animated: Bool) {

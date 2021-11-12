@@ -41,10 +41,7 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
         textView.text = memo.title + memo.content
     }
     
-    private func setNavigationBarButton() {
-        // swipe로 이전 화면 돌아갈 때 액션
-//
-        
+    private func setNavigationBarButton() {        
         let rightDoneBarButtonItem = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(doneButtonClicked))
         let rightShareBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareButtonClicked))
         navigationItem.setRightBarButtonItems([rightDoneBarButtonItem, rightShareBarButtonItem], animated: false)
@@ -78,22 +75,20 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
             try! realm.write {
                 realm.add(Memo(title: title, content: content))
             }
-            
-            self.navigationController?.popViewController(animated: true)
             return
         }
         // 수정
         try! realm.write {
             memo.title = title
             memo.content = content
-            self.navigationController?.popViewController(animated: true)
             return
         }
     }
     
     
     @objc func doneButtonClicked() {
-        saveMemo()
+//        saveMemo()
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func shareButtonClicked() {
