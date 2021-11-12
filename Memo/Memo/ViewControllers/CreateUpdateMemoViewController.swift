@@ -27,39 +27,52 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        if isMovingFromParent {
+            saveMemo()
+        }
+    }
+
     func configureViewController() {
         guard let memo = memo else {
             return
         }
-        textView.text = memo.title + "\n" + memo.content
+        textView.text = memo.title + memo.content
     }
     
     private func setNavigationBarButton() {
+        // swipe로 이전 화면 돌아갈 때 액션
+//
+        
         let rightDoneBarButtonItem = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(doneButtonClicked))
         let rightShareBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareButtonClicked))
         navigationItem.setRightBarButtonItems([rightDoneBarButtonItem, rightShareBarButtonItem], animated: false)
     }
-
     
-    @objc func doneButtonClicked() {
+    private func saveMemo() {
         guard let text = textView.text else {
             return
         }
         if text.isEmpty {
+            if let memo = memo {
+                try! realm.write {
+                    realm.delete(memo)
+                }
+            }
             self.navigationController?.popViewController(animated: true)
             return
         }
-        
+
         var title = ""
         var content = ""
-        
+
         if let firstLineEndIndex = text.firstIndex(of: "\n") {
             title = String(text[...firstLineEndIndex])
             content = String(text[text.index(after: firstLineEndIndex)...])
         } else {
             title = text
         }
-        
         // 새로 저장
         guard let memo = memo else {
             try! realm.write {
@@ -72,17 +85,19 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
         // 수정
         try! realm.write {
             memo.title = title
-            memo.content = title
+            memo.content = content
             self.navigationController?.popViewController(animated: true)
             return
         }
-        
+    }
+    
+    
+    @objc func doneButtonClicked() {
+        saveMemo()
     }
     
     @objc func shareButtonClicked() {
         print("공유")
         
     }
-    
-    
 }

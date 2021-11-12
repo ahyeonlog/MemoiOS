@@ -74,6 +74,9 @@ class MemoListViewController: UIViewController {
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        // back 버튼
+        let backBarButtonItem = UIBarButtonItem(title: "메모", style: .plain, target: self, action: #selector(backButtonClicked))
+        navigationItem.backBarButtonItem = backBarButtonItem
     }
     
     private func showFirstInfoVC() {
@@ -86,6 +89,9 @@ class MemoListViewController: UIViewController {
         } else {
             print("not first")
         }
+    }
+    @objc func backButtonClicked() {
+        print("back이오...")
     }
     
     @IBAction func createMemoButtonClicked(_ sender: UIBarButtonItem) {
