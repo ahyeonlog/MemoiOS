@@ -21,6 +21,9 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
         }
     }
     
+
+    @IBOutlet weak var textViewBottonConstraints: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .black
@@ -34,10 +37,31 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
         buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.systemGreen]
         navigationItem.standardAppearance?.buttonAppearance = buttonAppearance
         navigationItem.compactAppearance?.buttonAppearance = buttonAppearance
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.black
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // keyboard
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
+        // keyboard
+        NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
+        NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
+        
         if isMovingFromParent {
             saveMemo()
         }
@@ -66,7 +90,8 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
         guard let text = textView.text else {
             return
         }
-        if text.isEmpty {
+                
+        if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             if let memo = memo {
                 try! realm.write {
                     realm.delete(memo)
@@ -74,7 +99,9 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
             }
             self.navigationController?.popViewController(animated: true)
             return
+
         }
+                
 
         var title = ""
         var content = ""
@@ -99,6 +126,32 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
             return
         }
     }
+    
+    @objc private func keyboardWillAppear(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            textViewBottonConstraints.constant -= (keyboardHeight - self.view.safeAreaInsets.bottom)
+            
+            // 애니메이션 효과를 키보드 애니메이션 시간과 동일하게
+            guard let animationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else {
+                return
+            }
+            UIView.animate(withDuration: animationDuration) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+
+    @objc private func keyboardWillDisappear(notification: NSNotification) {
+        // 애니메이션 효과를 키보드 애니메이션 시간과 동일하게
+        let animationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
+        self.textViewBottonConstraints.constant = 0
+
+        UIView.animate(withDuration: animationDuration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
     
     @objc func doneButtonClicked() {
 //        saveMemo()

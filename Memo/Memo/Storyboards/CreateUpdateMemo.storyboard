@@ -17,12 +17,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6EU-7c-mTX">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6EU-7c-mTX">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="33" id="bQP-VI-JuP"/>
-                                </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -33,12 +30,13 @@
                         <constraints>
                             <constraint firstItem="6EU-7c-mTX" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="2gg-Mu-Qrw"/>
                             <constraint firstItem="6EU-7c-mTX" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="ONK-di-xE7"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="6EU-7c-mTX" secondAttribute="bottom" id="Pll-aE-RsY"/>
+                            <constraint firstItem="6EU-7c-mTX" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" id="Pll-aE-RsY"/>
                             <constraint firstItem="6EU-7c-mTX" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="i6w-Xf-K2H"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="textView" destination="6EU-7c-mTX" id="p5V-ZI-TtW"/>
+                        <outlet property="textViewBottonConstraints" destination="Pll-aE-RsY" id="JLm-XE-aS2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

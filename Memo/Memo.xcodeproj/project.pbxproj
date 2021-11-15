@@ -131,9 +131,9 @@
 		E5A17C502738FCBF00A4A15C /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E5369A8D273A3E3800F25C80 /* CreateUpdateMemoViewController.swift */,
 				E5A17C3E2738F88A00A4A15C /* MemoListViewController.swift */,
 				E5A17C572739CDA900A4A15C /* FirstInfoViewController.swift */,
-				E5369A8D273A3E3800F25C80 /* CreateUpdateMemoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

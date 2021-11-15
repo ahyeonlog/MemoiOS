@@ -173,3 +173,80 @@ if let firstLineEndIndex = text.firstIndex(of: "\n") {
 
 </details>
 
+
+
+### +수정 (21.11.15)
+
+팀원들과 프로젝트 회고를 하면서 내가 놓친 부분이 많다는걸 깨닫고 재빠르게(이미 늦었나요...? 늦었다고 생각할때가 제일 빠르다..) 수정
+
+- 사용자가 공백 또는 줄바꿈을 입력할 수도 있다.
+  - `trimmingCharacters(in: .whitespacesAndNewlines)` : 문자열의 앞 뒤 공백과 줄바꿈을 제거해줌
+
+```swift
+guard let text = textView.text else {
+    return
+}
+
+if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+    if let memo = memo {
+        try! realm.write {
+            realm.delete(memo)
+        }
+    }
+    self.navigationController?.popViewController(animated: true)
+    return
+
+}
+        
+```
+
+- 키보드가 텍스트뷰를 가린다!
+
+```swift
+@IBOutlet weak var textViewBottonConstraints: NSLayoutConstraint!
+
+override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    // keyboard
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    
+}
+
+override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(true)
+    // keyboard
+    NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
+    NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
+
+}
+
+@objc private func keyboardWillAppear(notification: NSNotification) {
+    if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+        let keyboardHeight = keyboardFrame.cgRectValue.height
+        textViewBottonConstraints.constant -= (keyboardHeight - self.view.safeAreaInsets.bottom)
+        
+        // 애니메이션 효과를 키보드 애니메이션 시간과 동일하게
+        guard let animationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else {
+            return
+        }
+        UIView.animate(withDuration: animationDuration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+}
+
+@objc private func keyboardWillDisappear(notification: NSNotification) {
+    // 애니메이션 효과를 키보드 애니메이션 시간과 동일하게
+    let animationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
+    self.textViewBottonConstraints.constant = 0
+
+    UIView.animate(withDuration: animationDuration) {
+        self.view.layoutIfNeeded()
+    }
+}
+
+```
+
+
+
