@@ -100,7 +100,7 @@ class MemoListViewController: UIViewController {
     
     private func showFirstInfoVC() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        if appDelegate.firstLaunch?.isFirstLaunch == true {
+        if appDelegate.firstLaunch?.isFirstLaunch {
             print("first launch")
             let vc = FirstInfoViewController.instantiate()
             vc.modalPresentationStyle = .overFullScreen

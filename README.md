@@ -173,9 +173,8 @@ if let firstLineEndIndex = text.firstIndex(of: "\n") {
 
 </details>
 
-
-
-### +수정 (21.11.15)
+<details>
+<summary>+수정 (21.11.15)</summary>
 
 팀원들과 프로젝트 회고를 하면서 내가 놓친 부분이 많다는걸 깨닫고 재빠르게(이미 늦었나요...? 늦었다고 생각할때가 제일 빠르다..) 수정
 
@@ -247,6 +246,19 @@ override func viewWillDisappear(_ animated: Bool) {
 }
 
 ```
+</details>
 
+<details>
+<summary>+feedback 정리</summary>
 
+- 아이폰/아이패드 대응 상태 확인!
+  - 아이패드가 자동으로 체크되어 있는데 아이패드 대응이 되어 있지 않다면 대부분 100% 리젝된다.
+- 앱 Display name을 잊는다면 Xcode Product Name이 앱의 이름이 된다.
+- 뷰컨트롤러가 여러 씬에서 사용된다면 열거형을 활용해서 명확성을 부여해주기!
+- Realm Query 분리
+- 메서드명에 `get` 쓰지않기!
+- Bool 값인걸 굳이 `OOO == true` 로 비교하지말자!
+- `protocol StoryboardInitializable: AnyObject` 
+  - 해당 프로토콜이 Class에서만 동작하게 구현하고싶다면 AnyObject를 상속해보자
 
+</details>

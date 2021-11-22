@@ -20,7 +20,6 @@ class CreateUpdateMemoViewController: UIViewController, StoryboardInitializable 
             textView.textContainerInset = UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)
         }
     }
-    
 
     @IBOutlet weak var textViewBottonConstraints: NSLayoutConstraint!
     

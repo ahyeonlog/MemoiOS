@@ -36,7 +36,7 @@ extension UIViewController {
     }
 }
 
-protocol StoryboardInitializable {
+protocol StoryboardInitializable: AnyObject {
     static var storyboardName: String { get set }
     static var storyboardID: String { get set }
     static func instantiate() -> Self
