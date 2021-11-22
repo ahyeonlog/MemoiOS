@@ -256,9 +256,10 @@ override func viewWillDisappear(_ animated: Bool) {
 - 앱 Display name을 잊는다면 Xcode Product Name이 앱의 이름이 된다.
 - 뷰컨트롤러가 여러 씬에서 사용된다면 열거형을 활용해서 명확성을 부여해주기!
 - Realm Query 분리
-- 메서드명에 `get` 쓰지않기!
+- 메서드명에 `get`은 겟아웃!
 - Bool 값인걸 굳이 `OOO == true` 로 비교하지말자!
 - `protocol StoryboardInitializable: AnyObject` 
   - 해당 프로토콜이 Class에서만 동작하게 구현하고싶다면 AnyObject를 상속해보자
+- tableview 갱신 reloadRow, reloadSection 적절하게 사용하기
 
 </details>
