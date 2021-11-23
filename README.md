@@ -261,5 +261,5 @@ override func viewWillDisappear(_ animated: Bool) {
 - `protocol StoryboardInitializable: AnyObject` 
   - 해당 프로토콜이 Class에서만 동작하게 구현하고싶다면 AnyObject를 상속해보자
 - tableview 갱신 reloadRow, reloadSection 적절하게 사용하기
-
+- ""을 저장하는 것과 nil을 저장하는 것엔 큰 차이가 있다!
 </details>
