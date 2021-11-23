@@ -256,19 +256,20 @@ override func viewWillDisappear(_ animated: Bool) {
 - 앱 Display name을 잊는다면 Xcode Product Name이 앱의 이름이 된다.
 - 뷰컨트롤러가 여러 씬에서 사용된다면 열거형을 활용해서 명확성을 부여해주기!
 - Realm Query 분리
-- 메서드명에 `get` 쓰지않기!
+- 메서드명에 `get`은 겟아웃!
 - Bool 값인걸 굳이 `OOO == true` 로 비교하지말자!
 - `protocol StoryboardInitializable: AnyObject` 
   - 해당 프로토콜이 Class에서만 동작하게 구현하고싶다면 AnyObject를 상속해보자
-
-
-
+- tableview 갱신 reloadRow, reloadSection 적절하게 사용하기
+- ""을 저장하는 것과 nil을 저장하는 것엔 큰 차이가 있다!
+  
+  
 [스위프트 이름 짓기 참고](https://soojin.ro/blog/english-for-developers-swift)
-
+  
 - 나중에 봐야지 [Naver Engineering TV - 영어 변수명을 잘 지어보자](https://tv.naver.com/v/4980432/list/267189)  
 
 스위프트의 getter  
-
+  
 스위프트에서 어떤 인스턴스를 리턴하는 함수나 메서드에 `get`을 쓰지 않는다. `get` 없이 바로 타입 이름(명사)으로 시작하면 된다.
 
 ```swift
@@ -277,13 +278,12 @@ func anchor(for node: SCNNode) -> ARAnchor?
 func distance(from location: CLLocation) -> CLLocationDistance        
 func track(withTrackID trackID: CMPersistentTrackID) -> AVAssetTrack? 
 ```
-
+  
 - 결과를 바로 리턴하는 `fetch` :공을 무조건 물어오는 강아지🐶
 - 유저에게 요청하거나 작업이 실패할 수 있을 때 `request`
 
 
 
 </details>
-
 
 
