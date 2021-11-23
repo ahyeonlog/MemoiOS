@@ -14,7 +14,7 @@ class FirstLaunch {
     }
     
     init(source: FirstLaunchDataSource) {
-        let wasLaunchedBefore = source.getWasLaunchedBefore()
+        let wasLaunchedBefore = source.wasLaunchedBefore()
         self.wasLaunchedBefore = wasLaunchedBefore
         if !wasLaunchedBefore {
             source.setWasLaunchedBefore(true)
@@ -29,23 +29,26 @@ extension FirstLaunch {
         return firstLaunch
     } }
 
+// 프로토콜
 protocol FirstLaunchDataSource {
-    func getWasLaunchedBefore() -> Bool
+    func wasLaunchedBefore() -> Bool
     func setWasLaunchedBefore(_ wasLaunchedBefore: Bool)
     
 }
 
+// Debug 모드
 struct AlwaysFirstLaunchDataSource : FirstLaunchDataSource {
-    func getWasLaunchedBefore() -> Bool { return false }
+    func wasLaunchedBefore() -> Bool { return false }
     func setWasLaunchedBefore(_ wasLaunchedBefore: Bool) {
         // do nothing
     }
 }
 
+// Release 모드
 struct UserDefaultsFirstLaunchDataSource : FirstLaunchDataSource {
     let defaults: UserDefaults
     let key: String
-    func getWasLaunchedBefore() -> Bool {
+    func wasLaunchedBefore() -> Bool {
         return defaults.bool(forKey: key)
     }
     func setWasLaunchedBefore(_ wasLaunchedBefore: Bool) {

@@ -69,6 +69,7 @@ class MemoListViewController: UIViewController {
         super.viewDidAppear(animated)
         tableView.reloadData()
     }
+    
     private func setNavigationAppearance() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -83,9 +84,8 @@ class MemoListViewController: UIViewController {
 //                                        forToolbarPosition: .any,
 //                                        barMetrics: .default)
 //        toolBar.setShadowImage(UIImage(), forToolbarPosition: .any)
-
-        
     }
+    
     private func setNavigationItem() {
         let searchController = UISearchController()
         searchController.searchResultsUpdater = self
@@ -100,7 +100,10 @@ class MemoListViewController: UIViewController {
     
     private func showFirstInfoVC() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        if appDelegate.firstLaunch?.isFirstLaunch {
+        guard let firstLaunchManager = appDelegate.firstLaunch else {
+            return
+        }
+        if firstLaunchManager.isFirstLaunch {
             print("first launch")
             let vc = FirstInfoViewController.instantiate()
             vc.modalPresentationStyle = .overFullScreen
@@ -109,6 +112,7 @@ class MemoListViewController: UIViewController {
             print("not first")
         }
     }
+    
     @objc func backButtonClicked() {
         print("back이오...")
     }
@@ -120,7 +124,7 @@ class MemoListViewController: UIViewController {
 }
 
 extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
-    func getRow(indexPath: IndexPath) -> Memo {
+    func requestedRow(indexPath: IndexPath) -> Memo {
         if isFiltering {
             return filterMemoList[indexPath.row]
         }
@@ -160,7 +164,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MemoListTableViewCell.identifier, for: indexPath) as? MemoListTableViewCell else {
             return UITableViewCell()
         }
-        let row: Memo = getRow(indexPath: indexPath)
+        let row: Memo = requestedRow(indexPath: indexPath)
         cell.configureCell(row: row)
         if isFiltering {
             cell.setHighlightedLabel(searchText: searchText)
@@ -169,7 +173,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row: Memo = getRow(indexPath: indexPath)
+        let row: Memo = requestedRow(indexPath: indexPath)
         
         let vc = CreateUpdateMemoViewController.instantiate()
         vc.memo = row
@@ -192,7 +196,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     // favorite
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let row: Memo = getRow(indexPath: indexPath)
+        let row: Memo = requestedRow(indexPath: indexPath)
         var image: UIImage
         
         image = row.isFavorite ? UIImage(systemName: "pin.slash.fill")! : UIImage(systemName: "pin.fill")!
@@ -215,7 +219,7 @@ extension MemoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     // delete
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let row: Memo = getRow(indexPath: indexPath)
+        let row: Memo = requestedRow(indexPath: indexPath)
         
         let deleteAction = UIContextualAction(style: .normal, title: "삭제", handler: { action, view, completionHaldler in
             self.showAlert(alertTitle: "메모를 삭제하시겠습니까?", alertMessage: "정말요?") { action in

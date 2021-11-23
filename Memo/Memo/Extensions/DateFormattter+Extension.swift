@@ -34,7 +34,7 @@ extension DateFormatter {
         return formatter
     }
     
-    static func getDateString(date: Date) -> String {
+    static func makeString(date: Date) -> String {
         let calendar = Calendar.current
         
         // 오늘
